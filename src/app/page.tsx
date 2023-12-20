@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { CreatePost } from "@/app/_components/create-post";
 import { api } from "@/trpc/server";
+import { Button } from "@/components/ui/button";
 
 export default async function Home() {
   const hello = await api.post.hello.query({ text: "from tRPC" });
@@ -41,7 +42,6 @@ export default async function Home() {
             {hello ? hello.greeting : "Loading tRPC query..."}
           </p>
         </div>
-
         <CrudShowcase />
       </div>
     </main>

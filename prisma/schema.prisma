@@ -6,15 +6,94 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "postgresql"
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model Staff {
+    staff_ID                  Int            @id @default(autoincrement())
+    first_name                String
+    last_name                 String
+    middle_name               String?
+    gender                    Gender         @default(MALE)
+    email                     String         @unique
+    password                  String
+    phone_number              String         @unique
+    joining_date              DateTime       @default(now())
+    cid                       String         @unique
+    dob                       DateTime
+    address                   String
+    Department                Department?    @relation(fields: [departmentDepartment_ID], references: [department_ID])
+    departmentDepartment_ID   Int?
+    Designation               Designation?   @relation(fields: [designationDesignation_ID], references: [designation_ID])
+    designationDesignation_ID Int?
+    Leave                     Leave[]
+    HOD                       HOD[]
+    LeaveBalance              LeaveBalance[]
+}
 
-    @@index([name])
+model LeaveBalance {
+    leaveBalance_ID  Int    @id @default(autoincrement())
+    casualBalance    Int    @default(5)
+    medicalBalance   Int    @default(5)
+    annualBalance    Int    @default(30)
+    paternityBalance Int    @default(10)
+    maternityBalance Int    @default(90)
+    staff            Staff? @relation(fields: [staffStaff_ID], references: [staff_ID])
+    staffStaff_ID    Int?
+}
+
+enum Gender {
+    MALE
+    FEMALE
+}
+
+model HOD {
+    hod_ID                  Int         @id @default(autoincrement())
+    staff                   Staff?      @relation(fields: [staffStaff_ID], references: [staff_ID])
+    staffStaff_ID           Int?
+    department              Department? @relation(fields: [departmentDepartment_ID], references: [department_ID])
+    departmentDepartment_ID Int?
+    joining_date            DateTime    @default(now())
+}
+
+model Department {
+    department_ID   Int     @id @default(autoincrement())
+    department_name String
+    description     String?
+    staffs          Staff[]
+    HOD             HOD[]
+}
+
+model Designation {
+    designation_ID   Int     @id @default(autoincrement())
+    designation_name String
+    description      String?
+    staffs           Staff[]
+}
+
+model Leave {
+    leave_ID              Int         @id @default(autoincrement())
+    leave_from            DateTime
+    leave_to              DateTime
+    leave_reason          String
+    leaveType             LeaveType?  @relation(fields: [leaveTypeLeaveType_ID], references: [leaveType_ID])
+    leaveTypeLeaveType_ID Int?
+    staff                 Staff?      @relation(fields: [staffStaff_ID], references: [staff_ID])
+    staffStaff_ID         Int?
+    status                LeaveStatus @default(PENDING)
+}
+
+enum LeaveStatus {
+    PENDING
+    APPROVED
+    REJECTED
+}
+
+model LeaveType {
+    leaveType_ID   Int     @id @default(autoincrement())
+    leaveType_name String
+    leaveBalance   Int
+    description    String?
+    leaves         Leave[]
 }
