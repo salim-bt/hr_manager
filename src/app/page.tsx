@@ -1,6 +1,7 @@
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import {Progress} from "@/components/ui/progress";
+import { IceCreamIcon } from "lucide-react";
 type CardDetails = {
     title: string;
     current: number;
@@ -43,9 +44,9 @@ export default async function Home() {
     ]
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-center mt-32 lg:pl-72 justify-start bg-white/20">
+    <main className="flex min-h-screen w-full flex-col items-center mt-32 lg:pl-96 justify-start bg-white/20">
        <div
-           className="flex flex-row items-center p-4 justify-center w-11/12 lg:w-5/6 rounded-lg shadow-xl"
+           className="flex flex-row items-center p-4 justify-center w-11/12 lg:w-5/6 rounded-lg shadow-md"
            >
             <Image
                 className={"rounded-lg"}
@@ -71,18 +72,19 @@ export default async function Home() {
                     Leave Balances
                 </p>
                 <div
-                   className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 w-full mt-4">
+                   className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-32 w-full mt-4">
                    {
                        cardDetails.map((cardDetail, index) => (
                            <Card
                                key={index}
-                               className="flex p-4 flex-col items-center justify-center shadow-xl">
+                               className="flex p-4 flex-col items-center justify-center shadow-sm">
                                <CardTitle>
                                     {cardDetail.title}
                                  </CardTitle>
                                <CardContent>
                                    <div
                                        className="flex flex-col items-center justify-center mt-4">
+                                       <IceCreamIcon size={80} className="my-2" />
                                        <p className="text-4xl font-semibold">
                                            {cardDetail.allowed - cardDetail.current}
                                        </p>

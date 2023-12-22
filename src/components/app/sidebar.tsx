@@ -18,7 +18,7 @@ type sidebarProps = {
 export default function Sidebar({ links, sidebarOpen}: sidebarProps) {
     return (
         <div
-            className={`bg-black/80 backdrop-blur-2xl w-96transition-[margin-left] ease-in-out duration-500 fixed top-0 bottom-0 left-0 lg:ml-0 ${sidebarOpen ? " -ml-96" : " ml-0"}`
+            className={`bg-black/80 backdrop-blur-2xl w-96 transition-[margin-left] ease-in-out duration-500 fixed top-0 bottom-0 left-0 lg:ml-0 ${sidebarOpen ? " -ml-96" : " ml-0"}`
             } >
             <div
                 className="relative flex-1 flex flex-col min-h-full max-w-xs w-full">
