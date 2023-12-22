@@ -1,42 +1,25 @@
 import React, { type ReactNode } from 'react'
 import Image from 'next/image'
-import { Button } from '@/components/ui/button';
-import { SidebarOpenIcon } from 'lucide-react';
+import {SidebarCloseIcon, SidebarOpenIcon} from 'lucide-react';
+import {Button} from "@/components/ui/button";
 
 export type HeaderProps = {
-    logo: string;
-    children: ReactNode;
     sidebarOpen: boolean;
     setSidebarOpen: (open: boolean) => void
 };
 
-export default function Header({ logo, children, sidebarOpen, setSidebarOpen }: HeaderProps) {
+export default function Header({ sidebarOpen, setSidebarOpen }: HeaderProps) {
     return (
-        <div
-            className='flex flex-row justify-between items-center h-16 w-full bg-gray-100'
-        >
-            <div className='flex flex-row items-center'>
-                <Image
-                    className='h-10 w-10 ml-4'
-                    width={40}
-                    height={40}
-                    src={logo}
-                    alt='logo'
-                />
-                <div className='ml-2 text-lg font-semibold'>
-                    <Button
-                        variant={'ghost'}
-                        onClick={() => setSidebarOpen(!sidebarOpen)}
-                    >
-                        <SidebarOpenIcon
-                            className='h-6 w-6'
-                        />
-                    </Button>
-                </div>
-                <div className='ml-2 text-lg font-semibold'>
-                    {children}
-                </div>
-            </div>
-        </div>
+        <header className="fixed top-0 left-0 flex items-center justify-start px-2 py-4 w-full h-16 shadow-2xl bg-black/80 backdrop-blur-2xl dark:bg-gray-800">
+            <Button
+                variant={"outline"}
+                className={`p-1 rounded-md lg:hidden focus:outline-none focus:shadow-outline-purple bg-transparent border-transparent border-2 text-white hover:text-gray-400 hover:border-gray-400 hover:bg-gray-900`}
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                aria-label="Menu">
+                {
+                    sidebarOpen ? <SidebarOpenIcon /> : <SidebarCloseIcon />
+                }
+            </Button>
+        </header>
     );
 }

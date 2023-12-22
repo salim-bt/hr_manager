@@ -1,10 +1,10 @@
 "use client";
 import React from 'react'
 import { type ReactNode } from "react";
-import Sidebar from './sidebar';
-import { type SideLink } from './sidebar';
+import Sidebar from '@/components/app/sidebar';
+import { type SideLink } from '@/components/app/sidebar';
 import { BookHeart, BookTemplate } from "lucide-react";
-import Header from './header';
+import Header from '@/components/app/header';
 export type ShellProps = {
     children: ReactNode;
 };
@@ -15,29 +15,24 @@ export default function AppShell({ children }: ShellProps) {
         { href: "/", label: "Home", icon:<BookHeart /> },
         { href: "/about", label: "About", icon: <BookTemplate /> },
     ];
-    const [sidebarOpen, setSidebarOpen] = React.useState(false);
+    const [sidebarOpen, setSidebarOpen] = React.useState(true);
     return (
         <div
             className='flex flex-col h-screen w-screen'
         >
-            <div>
-                <Header
-                    logo="/logo.svg"
-                    children={<div>My App</div>}
-                    sidebarOpen={sidebarOpen}
-                    setSidebarOpen={setSidebarOpen}
-                />
+            <div
+                className="flex h-full w-full">
+                {children}
             </div>
-            <div>
-                <div>
-                    <Sidebar
-                      links={links}
-                      sidebarOpen={sidebarOpen}
-                      setSidebarOpen={setSidebarOpen}
-                    />
-                </div>
-                <div>{children}</div>
-            </div>
+            <Sidebar
+                links={links}
+                sidebarOpen={sidebarOpen}
+                setSidebarOpen={setSidebarOpen}
+            />
+            <Header
+                sidebarOpen={sidebarOpen}
+                setSidebarOpen={setSidebarOpen}
+            />
         </div>
     );
 }

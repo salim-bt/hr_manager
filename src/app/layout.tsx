@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
 import { TRPCReactProvider } from "@/trpc/react";
 import AppShell from "@/components/app/appshell";
+import React from "react";
 
 const inter = Inter({
   subsets: ["latin"],
