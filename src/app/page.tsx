@@ -1,10 +1,10 @@
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
-
+import {Progress} from "@/components/ui/progress";
 type CardDetails = {
     title: string;
-    current: string;
-    allowed: string;
+    current: number;
+    allowed: number;
     footer: string;
 }
 
@@ -12,32 +12,32 @@ export default async function Home() {
     const cardDetails:CardDetails[] = [
         {
             title: "Annual Leave",
-            current: "12",
-            allowed: "30",
+            current: 12,
+            allowed: 30,
             footer: "Days"
         },
         {
             title: "Medical Leave",
-            current: "2",
-            allowed: "5",
+            current: 2,
+            allowed: 5,
             footer: "Days"
         },
         {
             title: "Maternity Leave",
-            current: "12",
-            allowed: "90",
+            current: 47,
+            allowed: 90,
             footer: "Days"
         },
         {
             title: "Paternity Leave",
-            current: "12",
-            allowed: "10",
+            current: 4,
+            allowed: 10,
             footer: "Days"
         },
         {
             title: "Casual Leave",
-            current: "12",
-            allowed: "20",
+            current: 12,
+            allowed: 20,
             footer: "Days"
         },
     ]
@@ -76,7 +76,7 @@ export default async function Home() {
                        cardDetails.map((cardDetail, index) => (
                            <Card
                                key={index}
-                               className="flex p-4 flex-col items-center justify-center">
+                               className="flex p-4 flex-col items-center justify-center shadow-xl">
                                <CardTitle>
                                     {cardDetail.title}
                                  </CardTitle>
@@ -84,17 +84,24 @@ export default async function Home() {
                                    <div
                                        className="flex flex-col items-center justify-center mt-4">
                                        <p className="text-4xl font-semibold">
-                                           {cardDetail.current}
+                                           {cardDetail.allowed - cardDetail.current}
                                        </p>
                                        <p className="text-xl font-semibold">
                                            {cardDetail.footer}
                                        </p>
                                    </div>
                                  </CardContent>
-                                 <CardFooter>
-                                      <p className="text-xl font-semibold">
-                                        {cardDetail.allowed} Allowed
-                                      </p>
+                                 <CardFooter
+                                    className="flex flex-col w-4/5"
+                                 >
+                                      <Progress
+                                          max={cardDetail.allowed}
+                                          className="my-4"
+                                          value={cardDetail.current/ cardDetail.allowed * 100}
+                                        />
+                                        <p className="text-md font-semibold text-right">
+                                            {cardDetail.current} / {cardDetail.allowed}
+                                        </p>
                                     </CardFooter>
                             </Card>
                        ))
